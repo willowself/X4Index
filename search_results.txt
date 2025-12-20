@@ -1,0 +1,23 @@
+Total results: 1
+
+Search conditions:
+- Moons is 6
+- Atmosphere is Alkali
+
+Matching planets:
+
+--- Planet 3730-2 ---
+{
+    "Index": "3730-2",
+    "Name": "Gaeoi",
+    "Radius": 3.0,
+    "Gravity": 1.05,
+    "Tectonics": "Jovian",
+    "Atmosphere": "Alkali",
+    "Oceans": "None",
+    "Life": false,
+    "Moons": 6,
+    "StarID": 3730,
+    "PlanetID": 2,
+    "PlanetCount": 5
+}
