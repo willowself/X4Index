@@ -8,12 +8,12 @@
         "Grade": 50.0
     },
     "1071531248859746455": {
-        "Contributions": 25227,
+        "Contributions": 500,
         "Grade": 100.0
     },
     "1208558084767752222": {
-        "Contributions": 0,
-        "Grade": 50.0
+        "Contributions": 21,
+        "Grade": 2.0
     },
     "1294672729244700744": {
         "Contributions": 0,
@@ -24,8 +24,8 @@
         "Grade": 50.0
     },
     "524398021669158912": {
-        "Contributions": 0,
-        "Grade": 50.0
+        "Contributions": 4,
+        "Grade": 54.0
     },
     "1324157130852270091": {
         "Contributions": 0,
@@ -63,17 +63,13 @@
         "Contributions": 0,
         "Grade": 50.0
     },
-    "759961478349717534": {
-        "Contributions": 3,
-        "Grade": 50.5
-    },
     "1225209872824664065": {
         "Contributions": 0,
         "Grade": 50.0
     },
     "1021835061433225296": {
-        "Contributions": 47,
-        "Grade": 60.0
+        "Contributions": 236,
+        "Grade": 100.0
     },
     "1347832381716828213": {
         "Contributions": 0,
@@ -84,7 +80,23 @@
         "Grade": 50.0
     },
     "1104487278308495492": {
-        "Contributions": 51,
+        "Contributions": 78,
         "Grade": 100.0
+    },
+    "917107188235907082": {
+        "Contributions": 666,
+        "Grade": 100.0
+    },
+    "1377027676153315328": {
+        "Contributions": 30,
+        "Grade": 100.0
+    },
+    "506970420763951146": {
+        "Contributions": 0,
+        "Grade": 100.0
+    },
+    "759961478349717534": {
+        "Contributions": 14,
+        "Grade": 67.0
     }
 }
