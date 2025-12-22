@@ -100,7 +100,6 @@ def conditionSearch(msg, data, try_cast):
     }
 
     parsed_conditions = []
-    dist_condition = None
     planet_count_condition = None
 
     for cond in logic_sequence:
@@ -108,12 +107,13 @@ def conditionSearch(msg, data, try_cast):
             parsed_conditions.append(cond.lower())
             continue
 
-        parts = cond.split(" ", 2)
-        if len(parts) < 2:
+        parts = cond.split()
+        if len(parts) < 3:
             return {"error": f"⚠️ Invalid condition format: `{cond}`"}
 
-        field, op = parts[0], parts[1]
-        val = parts[2] if len(parts) == 3 else None
+        field = parts[0]
+        op = parts[1]
+        val = " ".join(parts[2:])
 
         op = op.lower()
         if op not in operators:
@@ -121,10 +121,7 @@ def conditionSearch(msg, data, try_cast):
 
         val = try_cast(val)
 
-        if field.lower().startswith("dist/"):
-            target_index = field.split("/", 1)[1]
-            dist_condition = (target_index, op, val)
-        elif field.lower() == "planetcount":
+        if field.lower() == "planetcount":
             try:
                 val = int(val)
             except Exception:
@@ -197,7 +194,6 @@ def conditionSearch(msg, data, try_cast):
     return {
         "matches": matches,
         "parsed_conditions": [c for c in parsed_conditions if not isinstance(c, str)],
-        "dist_condition": dist_condition,
         "planet_count_condition": planet_count_condition,
     }
 
@@ -209,7 +205,6 @@ load_dotenv()
 token = os.getenv("DISCORD_TOKEN")
 ALLOWED_GUILD_ID = int(os.getenv("ALLOWED_GUILD_ID"))
 
-# decaratores for uhh frick you
 def in_allowed_guild():
     async def predicate(ctx):
         if ctx.guild is None or ctx.guild.id != ALLOWED_GUILD_ID:
@@ -752,15 +747,10 @@ async def search(ctx, *, msg: str):
         if results["planet_count_condition"]:
             _, op, val = results["planet_count_condition"]
             f.write(f"- PlanetCount {op} {val}\n")
-        if results["dist_condition"]:
-            target_index, op, val = results["dist_condition"]
-            f.write(f"- dist/{target_index} {op} {val}\n")
 
         f.write("\nMatching planets:\n")
-        for index, planet, rel_distance in limited_matches:
+        for index, planet in limited_matches:
             header = f"--- Planet {index} ---"
-            if rel_distance is not None:
-                header += f" / Distance: {rel_distance}"
             f.write(f"\n{header}\n{json.dumps(planet, indent=4)}\n")
 
     await ctx.reply(file=discord.File(filename))
@@ -798,9 +788,6 @@ async def count(ctx, *, msg: str = None):
     if results.get("planet_count_condition"):
         _, op, val = results["planet_count_condition"]
         summary_lines.append(f"`PlanetCount {op} {val}`")
-    if results.get("dist_condition"):
-        target_index, op, val = results["dist_condition"]
-        summary_lines.append(f"`dist/{target_index} {op} {val}`")
 
     summary_text = ", ".join(summary_lines) if summary_lines else "No specific filters"
     await ctx.reply(f"✅ `{counted}` planets matched your conditions.\n"
@@ -1194,7 +1181,6 @@ async def help(ctx, admin = False):
         "   * x!edit allows for editing multiple planets using | as the separator. Pass /DEL into a field to delete it.\n"
         "`x!search <conditions>` - Returns planets that match all of your conditions.\n"
         "`x!rem <id> ... and so on` - Removes a planet, or multiple planets.\n"
-        "`x!distance <starId1> <starId2>` - Approximates the in-game distance between two stars using math.\n"
         "`x!count <conditions?>` - Tells you the amount of planets matching your conditions or amount of all planets if no conditions are specified.\n"
         "`x!ping` - Returns the latency and checks if the bot works.\n"
         "`x!getGrade <userId>` - Returns the amount of contributions a user made and their 'grade' (which is a system of limits for users with bad edit score)\n"
